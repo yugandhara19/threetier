@@ -4,7 +4,7 @@
     {
       "Action": "CREATE",
       "ResourceRecordSet": {
-        "Name": "mythree.mykubesyn1503.tk",
+        "Name": "mythree.synechron2303.tk",
         "Type": "CNAME",
         "TTL": 1000,
         "ResourceRecords": [
