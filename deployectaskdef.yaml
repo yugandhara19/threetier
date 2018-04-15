@@ -1,0 +1,46 @@
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Create task definition
+      ecs_taskdefinition:
+        containers:
+        - name: frontend
+          cpu: 1
+          memory: 500
+          essential: true
+          image: 183734589743.dkr.ecr.us-east-1.amazonaws.com/frontend
+          portMappings:
+            - containerPort: 80
+              hostPort: 10001
+        - name: backend
+          cpu: 1
+          memory: 500
+          essential: true
+          image: 183734589743.dkr.ecr.us-east-1.amazonaws.com/backend
+          environment:
+            - name: "MY_DB_USER"
+              value: "mysql_admin"
+            - name: "MY_DB_PASS"
+              value: "1nsecure"
+            - name: "MY_DB_NAME"
+              value: "userdb"
+            - name: "MY_DB_HOST"
+              value: "DATABASENAME"
+        family: cytelapp-auto-taskdef
+        state: present
+      register: taskdef
+    - cloudformation:
+        region: us-east-1
+        stack_name: "{{ stackname }}"
+        state: present
+        template: deployecsservice.yaml
+        template_parameters:
+           sgname: "{{ sgname  }}"
+           vpcid: "{{ vpcid }}"
+           elbname: "{{ elbname }}"
+           firstsubnetid: "{{ firstsubnetid }}"
+           secondsubnetid: "{{ secondsubnetid }}"
+           clustername: "{{ clustername }}"
+           taskdefver: "{{ taskdef.taskdefinition.taskDefinitionArn }}"
+		   servicename: "{{ servicename }}"
