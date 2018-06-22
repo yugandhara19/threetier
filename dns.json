@@ -4,7 +4,7 @@
     {
       "Action": "CREATE",
       "ResourceRecordSet": {
-        "Name": "stageapp.mohansyntest.tk",
+        "Name": "stageapp.crazy123.tk",
         "Type": "CNAME",
         "TTL": 1000,
         "ResourceRecords": [
