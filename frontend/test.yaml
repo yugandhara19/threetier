@@ -6,7 +6,7 @@
        ecs_taskdefinition:
          aws_access_key: AKIAJR2RHPPWCAKJ2BCA
          aws_secret_key: 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
-         region: us-east-1
+         region: us-east-2
          family: threetierapp
          state: present
          containers:
